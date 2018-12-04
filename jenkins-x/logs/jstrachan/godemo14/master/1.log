@@ -1,0 +1,153 @@
+Step: build-step-credential-initializer:
+
+Step: build-step-git-source:
+
+Step: build-step-jenkins:
+
+Picked up _JAVA_OPTIONS: -Xmx400m
+Started
+Running in Durability level: PERFORMANCE_OPTIMIZED
+  18.709 [id=24]	WARNING	i.f.k.c.i.VersionUsageUtils#alert: The client is using resource type 'customresourcedefinitions' with unstable version 'v1beta1'
+[Pipeline] node
+Running on Jenkins in /tmp/jenkinsTests.tmp/jenkins7172465036786538139test/workspace/job
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+[Pipeline] }
+  28.000 [id=64]	WARNING	o.j.r.u.AnonymousClassWarnings#warn: Attempt to (de-)serialize anonymous class com.cloudbees.plugins.credentials.CredentialsScope$2 in file:/usr/share/jenkins/ref/plugins/credentials/WEB-INF/lib/credentials.jar; see: https://jenkins.io/redirect/serialization-of-anonymous-classes/
+[Pipeline] // stage
+[Pipeline] withCredentials
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (CI Build and push snapshot)
+Stage "CI Build and push snapshot" skipped due to when conditional
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Release)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jstrachan/godemo14
+[Pipeline] {
+[Pipeline] git
+Cloning the remote Git repository
+Cloning repository https://github.com/jstrachan/godemo14.git
+ > git init /home/jenkins/go/src/github.com/jstrachan/godemo14 # timeout=10
+Fetching upstream changes from https://github.com/jstrachan/godemo14.git
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/jstrachan/godemo14.git +refs/heads/*:refs/remotes/origin/*
+ > git config remote.origin.url https://github.com/jstrachan/godemo14.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/jstrachan/godemo14.git # timeout=10
+Fetching upstream changes from https://github.com/jstrachan/godemo14.git
+ > git fetch --tags --progress https://github.com/jstrachan/godemo14.git +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision 75251f98a77b41563c57174e8a930a0adb0c7056 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 75251f98a77b41563c57174e8a930a0adb0c7056
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b master 75251f98a77b41563c57174e8a930a0adb0c7056
+Commit message: "Update main.go"
+First time build. Skipping changelog.
+[Pipeline] sh
+[godemo14] Running shell script
++ jx-release-version
++ echo 0.0.7
+[Pipeline] sh
+[godemo14] Running shell script
++ cat VERSION
++ jx step tag --version 0.0.7
+Tag v0.0.7 created and pushed to remote origin
+[Pipeline] sh
+[godemo14] Running shell script
++ make build
+CGO_ENABLED=0 GO15VENDOREXPERIMENT=1 go build -ldflags '' -o bin/godemo14 main.go
+[Pipeline] sh
+[godemo14] Running shell script
++ cat VERSION
++ export VERSION=0.0.7
++ skaffold build -f skaffold.yaml
+Starting build...
+Building [changeme]...
+Sending build context to Docker daemon  525.8kBSending build context to Docker daemon  6.497MB
+Step 1/4 : FROM scratch
+ ---> 
+Step 2/4 : EXPOSE 8080
+ ---> Using cache
+ ---> ef76a0e30ffe
+Step 3/4 : ENTRYPOINT /godemo14
+ ---> Using cache
+ ---> 749996d6b609
+Step 4/4 : COPY ./bin/ /
+ ---> ff6022767e37
+Successfully built ff6022767e37
+The push refers to a repository [10.67.242.208:5000/jstrachan/godemo14]
+b7f8f2c8b066: Preparing
+b7f8f2c8b066: Pushed
+0.0.7: digest: sha256:8a3bd0138ceaf7dd7c0fbf5b8646edc5c99361b4928ac73672f5a51019fced05 size: 528
+Build complete in 1.344319264s
+changeme -> 10.67.242.208:5000/jstrachan/godemo14:0.0.7
+[Pipeline] sh
+[godemo14] Running shell script
++ cat VERSION
++ jx step post build --image 10.67.242.208:5000/jstrachan/godemo14:0.0.7
+no CVE provider running in the current jx namespace so skip adding image to be analysed[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Promote to Environments)
+[Pipeline] dir
+Running in /home/jenkins/go/src/github.com/jstrachan/godemo14/charts/godemo14
+[Pipeline] {
+[Pipeline] sh
+[godemo14] Running shell script
++ cat ../../VERSION
++ jx step changelog --version v0.0.7
+Using batch mode as inside a pipeline
+Generating change log from git ref 7003e7126f095f7909995670943faf760e8d41ad => fd6dca76f83d317fa5e8e6c7daaabe6c9b8272df
+Unable to find user: jenkins-x.googlegroups.com -- users.jenkins.io "jenkins-x.googlegroups.com" is forbidden: User "system:serviceaccount:jx:knative-build-bot" cannot get users.jenkins.io in the namespace "jx"
+Unable to find user: jenkins-x.googlegroups.com -- users.jenkins.io "jenkins-x.googlegroups.com" is forbidden: User "system:serviceaccount:jx:knative-build-bot" cannot get users.jenkins.io in the namespace "jx"
+Finding issues in commit messages using git format
+Unable to find user: james.strachan.gmail.com -- users.jenkins.io "james.strachan.gmail.com" is forbidden: User "system:serviceaccount:jx:knative-build-bot" cannot get users.jenkins.io in the namespace "jx"
+Unable to find user: noreply.github.com -- users.jenkins.io "noreply.github.com" is forbidden: User "system:serviceaccount:jx:knative-build-bot" cannot get users.jenkins.io in the namespace "jx"
+No release found for jstrachan/godemo14 and tag v0.0.7 so creating a new release
+Updated the release information at https://github.com/jstrachan/godemo14/releases/tag/v0.0.7
+generated: /home/jenkins/go/src/github.com/jstrachan/godemo14/charts/godemo14/templates/release.yaml
+Failed to create Release godemo14-0-0-7 in namespace jx: releases.jenkins.io is forbidden: User "system:serviceaccount:jx:knative-build-bot" cannot create releases.jenkins.io in the namespace "jx"
+Updating PipelineActivity jstrachan-godemo14-master-1 with version 0.0.7
+Updated PipelineActivities jstrachan-godemo14-master-1 with release notes URL: https://github.com/jstrachan/godemo14/releases/tag/v0.0.7
+[Pipeline] sh
+[godemo14] Running shell script
++ jx step helm release
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Adding missing Helm repo: jenkins-x http://chartmuseum.jenkins-x.io
+Successfully added Helm repository jenkins-x.
+Adding missing Helm repo: releases http://jenkins-x-chartmuseum:8080
+Successfully added Helm repository releases.
+No $CHART_REPOSITORY defined so using the default value of: http://jenkins-x-chartmuseum:8080
+Uploading chart file godemo14-0.0.7.tgz to http://jenkins-x-chartmuseum:8080/api/charts
+Received 201 response: {"saved":true}
+[Pipeline] sh
+[godemo14] Running shell script
++ cat ../../VERSION
++ jx promote -b --all-auto --timeout 1h --version 0.0.7
+Promoting app godemo14 version 0.0.7 to namespace jx-staging
+Created Pull Request: https://github.com/jstrachan/environment-jstrachan-prow8-staging/pull/7
+
+Pull Request https://github.com/jstrachan/environment-jstrachan-prow8-staging/pull/7 is merged at sha b8b86b0d39e5904cd4510311941a6bbc639734cf
+Merge commit has not yet any statuses on repo jstrachan/environment-jstrachan-prow8-staging merge sha b8b86b0d39e5904cd4510311941a6bbc639734cf
+error: Timed out waiting for pull request https://github.com/jstrachan/environment-jstrachan-prow8-staging/pull/7 to merge. Waited 1h0m0s
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
